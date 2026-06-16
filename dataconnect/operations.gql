@@ -1,0 +1,62 @@
+# -------------------------------
+# CREATE USER
+# -------------------------------
+mutation CreateUser($name: String!, $email: String!) {
+  user_insert(data: {
+    name: $name,
+    email: $email
+  }) {
+    id
+    name
+    email
+  }
+}
+
+# -------------------------------
+# CREATE APPOINTMENT
+# -------------------------------
+mutation CreateAppointment(
+  $userId: ID!,
+  $doctorId: ID!,
+  $date: String!
+) {
+  appointment_insert(data: {
+    userId: $userId,
+    doctorId: $doctorId,
+    date: $date
+  }) {
+    id
+    date
+  }
+}
+
+# -------------------------------
+# SAVE AI CHAT
+# -------------------------------
+mutation SaveAIChat(
+  $userId: ID!,
+  $message: String!,
+  $reply: String!
+) {
+  aichat_insert(data: {
+    userId: $userId,
+    message: $message,
+    reply: $reply
+  }) {
+    id
+  }
+}
+
+# -------------------------------
+# GET USER APPOINTMENTS
+# -------------------------------
+query GetAppointments($userId: ID!) {
+  appointment(where: { userId: { eq: $userId } }) {
+    id
+    date
+    doctor {
+      name
+      specialization
+    }
+  }
+}
